@@ -33,5 +33,4 @@ When you're ready, run:
 npm run reset-project
 ```
 ## Screenshot 
-Landing Page
 <img src="./ui_photos/tic-tac-toe.PNG">
