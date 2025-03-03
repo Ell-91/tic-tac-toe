@@ -1,54 +1,54 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import React, { useState } from "react";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import ParallaxScrollView from "@/components/ParallaxScrollView";
+import { ThemedText } from "@/components/ThemedText";
+import { ThemedView } from "@/components/ThemedView";
+
+//Empty board initialized with null
+const [board, setBoard] = useState(Array(9).fill(null));
 
 export default function HomeScreen() {
+  // Function for rendering squares
+  const renderSquare = (index) => {
+    return (
+      <TouchableOpacity style={styles.square}>
+        <ThemedText style={styles.squareText}>{board[index]}</ThemedText>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
+      headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
       headerImage={
         <Image
-          source={require('@/assets/images/partial-react-logo.png')}
+          source={require("@/assets/images/partial-react-logo.png")}
           style={styles.reactLogo}
         />
-      }>
+      }
+    >
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
+        <ThemedText type="title">Tic Tac Toe</ThemedText>
       </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12'
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
+
+      {/* Game board */}
+      <ThemedView style={styles.boardContainer}>
+        <View style={styles.boardRow}>
+          {renderSquare(0)}
+          {renderSquare(1)}
+          {renderSquare(2)}
+        </View>
+        <View style={styles.boardRow}>
+          {renderSquare(3)}
+          {renderSquare(4)}
+          {renderSquare(5)}
+        </View>
+        <View style={styles.boardRow}>
+          {renderSquare(6)}
+          {renderSquare(7)}
+          {renderSquare(8)}
+        </View>
       </ThemedView>
     </ParallaxScrollView>
   );
@@ -56,19 +56,45 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+    marginBottom: 16,
   },
   reactLogo: {
     height: 178,
     width: 290,
     bottom: 0,
     left: 0,
-    position: 'absolute',
+    position: "absolute",
+  },
+  gameStatusContainer: {
+    alignItems: "center",
+    marginBottom: 16,
+  },
+  boardContainer: {
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  boardRow: {
+    flexDirection: "row",
+  },
+  square: {
+    width: 80,
+    height: 80,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    justifyContent: "center",
+    alignItems: "center",
+    margin: 2,
+  },
+  squareText: {
+    fontSize: 40,
+    fontWeight: "bold",
+  },
+  helpContainer: {
+    gap: 8,
+    marginBottom: 16,
   },
 });
+
